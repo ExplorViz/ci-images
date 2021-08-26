@@ -1,6 +1,15 @@
 stages:
+  - test
   - deploy:images
   - deploy:retagging
+
+run-pre-commit:
+  stage: test
+  image: explorviz/pre-commit:latest
+  tags:
+    - exec-docker
+  script:
+    - pre-commit run --all-files
 
 deploy-pre-commit-image:
   stage: deploy:images
