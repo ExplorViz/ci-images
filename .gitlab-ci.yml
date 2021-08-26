@@ -9,7 +9,7 @@ run-pre-commit:
   tags:
     - exec-docker
   script:
-    - test
+    - pre-commit run --all-files --config pre-commit/
 
 deploy-pre-commit-image:
   stage: deploy:images
