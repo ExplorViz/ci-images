@@ -9,7 +9,7 @@ run-pre-commit:
   tags:
     - exec-docker
   script:
-    - pre-commit run --all-files
+    - test
 
 deploy-pre-commit-image:
   stage: deploy:images
@@ -29,6 +29,8 @@ retag-pre-commit-image:
   stage: deploy:retagging
   tags:
     - exec-docker
+  only:
+    - schedules
   image:
     name: gcr.io/go-containerregistry/crane:debug
     entrypoint: [""]
