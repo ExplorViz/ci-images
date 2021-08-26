@@ -3,5 +3,8 @@ repos:
     sha: master  # Use the ref you want to point at
     hooks:
       - id: check-yaml
+        log_file: pre-commit.log
       - id: end-of-file-fixer
+        log_file: pre-commit.log
       - id: trailing-whitespace
+        log_file: pre-commit.log
