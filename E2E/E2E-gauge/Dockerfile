@@ -26,7 +26,7 @@ ENV PATH=$PATH:/home/gauge/.npm-packages/bin
 
 # Add the Taiko browser arguments
 # ENV TAIKO_BROWSER_ARGS=--no-sandbox,--start-maximized,--disable-dev-shm-usage
-ENV headless_chrome=false
+# ENV headless_chrome=false
 # ENV TAIKO_SKIP_DOCUMENTATION=true
 
 # Uncomment the lines below to use chrome bundled with this image

@@ -70,14 +70,14 @@ step("Open Frontend-Demo application", async function () {
 
 step("Open petclinic-example page", async function () {
   await goto("http://host.docker.internal:18080");
-  await screenshot({ path: "/var/out/lol1.png" })
+  // await screenshot({ path: "/var/out/lol1.png" })
   // await goto("http://localhost:18080")
 });
 
 // opens landscape in a new tab
 step("Open Explorviz landscape", async function () {
   await openTab("http://explorviz-frontend/landscapes");
-  await screenshot({ path: "/var/out/lol2.png" })
+  // await screenshot({ path: "/var/out/lol2.png" })
   // await openTab("http://localhost:8080/landscapes");
   // await goto("http://localhost:8080/landscapes");
 });
@@ -94,7 +94,7 @@ step("Click Open Visualisation <table>", async function (table) {
   for (var row of table.rows) {
     await click(button({ class: row.cells[2] }));
   }
-  await screenshot({ path: "/var/out/lol3.png" });
+  // await screenshot({ path: "/var/out/lol3.png" });
 });
 
 step("Click <text>", async function (text) {
@@ -108,12 +108,12 @@ step("Click button to dismiss timeline", async function () {
 step(
   "Click on Element and take screenshot <screenshotFileName>", async (screenshotFileName) => {
     await new Promise(r => setTimeout(r, 9000));
-    await screenshot({ path: "/var/out/lol4.png" });
+    // await screenshot({ path: "/var/out/lol4.png" });
     await new Promise(r => setTimeout(r, 9000));
     await click({ x: 500, y: 450});
     await rightClick({ x: 500, y: 450})
     await screenshot({path: "screenshots/test/" + screenshotFileName + ".png"});
-    await screenshot({ path: "/var/out/lol5.png" });
+    // await screenshot({ path: "/var/out/lol5.png" });
   }
 );
 

@@ -37,3 +37,10 @@ retag-pre-commit-image:
   script:
     - crane auth login -u $DOCKERHUB_USER -p $DOCKERHUB_PASSWORD "index.docker.io"
     - crane cp explorviz/pre-commit:latest explorviz/pre-commit:$CI_COMMIT_SHORT_SHA
+
+run-E2E-test:
+  stage: test
+  tags:
+  - exec-docker
+  script:
+    - docker-compose build
