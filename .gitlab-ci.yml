@@ -44,7 +44,6 @@ run-E2E-test:
     - exec-docker
   before_script:
     - apk add --update curl
-    - docker version
     - docker-compose version
   script:
     - docker-compose build
