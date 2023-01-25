@@ -43,4 +43,4 @@ run-E2E-test:
   tags:
     - exec-docker
   script:
-    - docker-compose up -d
+    - docker compose up -d
