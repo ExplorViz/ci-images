@@ -43,4 +43,4 @@ run-E2E-test:
   tags:
     - exec-docker
   script:
-    - E2E/compose.sh
+    - sudo E2E/compose.sh
