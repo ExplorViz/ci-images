@@ -41,6 +41,6 @@ retag-pre-commit-image:
 run-E2E-test:
   stage: test
   tags:
-  - exec-docker
+    - exec-docker
   script:
-    - docker-compose up -d --build
+    - ./E2E/compose.txt
