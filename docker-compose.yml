@@ -21,7 +21,7 @@ services:
 
     volumes:
       # - "/Users/alex/Desktop/HTML:/var/out"
-      - "C:/Users/Tim/Desktop/Bachelorarbeit/HTML:/var/out"
+      # - "C:/Users/Tim/Desktop/Bachelorarbeit/HTML:/var/out"
 
   ## Kafka ##
 
