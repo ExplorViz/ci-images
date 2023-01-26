@@ -42,5 +42,9 @@ run-E2E-test:
   stage: test
   tags:
     - exec-docker
+  before_script:
+    - apk add --update curl
+    - docker-compose version
   script:
-    - E2E/compose.txt
+    - docker-compose build
+    - docker-compose up
