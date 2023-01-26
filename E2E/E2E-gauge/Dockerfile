@@ -22,17 +22,6 @@ RUN apt-get update \
 ENV NPM_CONFIG_PREFIX=/home/gauge/.npm-packages
 ENV PATH=$PATH:/home/gauge/.npm-packages/bin
 
-# ENV PATH=$PATH:/home/node/.npm-global/bin
-
-# Add the Taiko browser arguments
-# ENV TAIKO_BROWSER_ARGS=--no-sandbox,--start-maximized,--disable-dev-shm-usage
-# ENV headless_chrome=false
-# ENV TAIKO_SKIP_DOCUMENTATION=true
-
-# Uncomment the lines below to use chrome bundled with this image
-# ENV TAIKO_SKIP_CHROMIUM_DOWNLOAD=true
-# ENV TAIKO_BROWSER_PATH=/usr/bin/google-chrome
-
 # Set working directory
 RUN mkdir -p /var/out
 WORKDIR /gauge
