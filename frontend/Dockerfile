@@ -1,4 +1,4 @@
-FROM node:14-alpine
+FROM node:18.17.0-alpine
 
 RUN npm install npm@latest -g && npm install -g ember-cli && npm install -g ember-template-lint
 
