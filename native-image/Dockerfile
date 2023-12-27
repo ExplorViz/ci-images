@@ -3,6 +3,5 @@ FROM quay.io/quarkus/ubi-quarkus-mandrel-builder-image@sha256:4a12f33a70dff6fa09
 
 USER root
 RUN microdnf install findutils
-USER quarkus
 
 ENTRYPOINT [ "" ]
