@@ -1,6 +1,8 @@
-FROM node:18.17.0-alpine
+FROM node:20.11.0-alpine
 
-RUN npm install npm@latest -g && npm install -g ember-cli && npm install -g ember-template-lint
+# npm install npm@latest -g
+
+RUN npm install -g ember-cli && npm install -g ember-template-lint
 
 # https://github.com/Zenika/alpine-chrome/blob/master/Dockerfile
 
