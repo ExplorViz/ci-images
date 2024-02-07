@@ -1,30 +1,16 @@
-FROM node:20.11.0-alpine
-
-# npm install npm@latest -g
+FROM node:20.11.0-bookworm
 
 RUN npm install -g ember-cli && npm install -g ember-template-lint
 
-# https://github.com/Zenika/alpine-chrome/blob/master/Dockerfile
+RUN apt update && apt install -y chromium
 
-# Installs latest Chromium package.
-RUN echo "http://dl-cdn.alpinelinux.org/alpine/edge/main" > /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/community" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/edge/testing" >> /etc/apk/repositories \
-    && echo "http://dl-cdn.alpinelinux.org/alpine/v3.12/main" >> /etc/apk/repositories \
-    && apk upgrade -U -a \
-    && apk add \
-    libstdc++ \
-    chromium \
-    harfbuzz \
-    nss \
-    freetype \
-    ttf-freefont \
-    font-noto-emoji \
-    wqy-zenhei \
-    && rm -rf /var/cache/* \
-    && mkdir /var/cache/apk
-
-ENV CHROME_BIN=/usr/bin/chromium-browser \
+ENV CHROME_BIN=/usr/bin/chromium \
     CHROME_PATH=/usr/lib/chromium/
 
-RUN ln -s /usr/bin/chromium-browser /usr/bin/google-chrome
+RUN ln -s /usr/bin/chromium /usr/bin/google-chrome
+
+RUN groupadd -r chromium && useradd -r -g chromium -G audio,video chromium \
+    && mkdir -p /home/chromium/Downloads && chown -R chromium:chromium /home/chromium
+
+# Run as non privileged user since privileged user is not allowed to run chromium without sandbox option
+USER chromium
