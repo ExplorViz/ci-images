@@ -25,12 +25,24 @@ deploy-pre-commit-amd64:
       when: never
     - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"'
 
+deploy-pre-commit-arm64:
+  extends:
+    - .deploy-pre-commit-amd64
+  rules:
+    - if: $MULTI_ARCH_BUILD || $ARM64_BUILD
+  tags:
+    - arm64
+
 retag-pre-commit-amd64-as-latest:
   extends: .retag-dockerhub-image
   rules:
     - if: $MULTI_ARCH_BUILD || $ARM64_BUILD
       when: never
-    - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"'
+    - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "pipeline"''
   variables:
     SOURCE_TAG: 'amd64'
     TARGET_TAG: 'latest'
+
+publish-multi-arch-pre-commit:
+  extends:
+    - .retag-as-multi-arch-dockerhub-image
