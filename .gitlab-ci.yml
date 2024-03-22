@@ -30,6 +30,7 @@ deploy-pre-commit-arm64:
     - .build-and-deploy
   variables:
     DOCKER_CONTEXT_PATH: $CI_PROJECT_DIR/pre-commit
+    DOCKERHUB_TAG: arm64
   rules:
     - if: $MULTI_ARCH_BUILD || $ARM64_BUILD
   tags:
