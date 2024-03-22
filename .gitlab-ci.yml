@@ -27,7 +27,9 @@ deploy-pre-commit-amd64:
 
 deploy-pre-commit-arm64:
   extends:
-    - .deploy-pre-commit-amd64
+    - .build-and-deploy
+  variables:
+    DOCKER_CONTEXT_PATH: $CI_PROJECT_DIR/pre-commit
   rules:
     - if: $MULTI_ARCH_BUILD || $ARM64_BUILD
   tags:
@@ -38,7 +40,7 @@ retag-pre-commit-amd64-as-latest:
   rules:
     - if: $MULTI_ARCH_BUILD || $ARM64_BUILD
       when: never
-    - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "pipeline"''
+    - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web" || $CI_PIPELINE_SOURCE == "pipeline"'
   variables:
     SOURCE_TAG: 'amd64'
     TARGET_TAG: 'latest'
