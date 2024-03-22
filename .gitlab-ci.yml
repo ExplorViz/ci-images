@@ -1,3 +1,7 @@
+include:
+  - project: 'ExplorViz/code/deployment'
+    file: '.gitlab-ci-explorviz-common.yml'
+
 stages:
   - test
   - deploy:images
@@ -11,29 +15,22 @@ run-pre-commit:
   script:
     - pre-commit run --all-files --config pre-commit/.pre-commit-config.yaml
 
-deploy-pre-commit-image:
-  stage: deploy:images
-  tags:
-    - exec-docker
-  only:
-    - schedules
-  image:
-    name: gcr.io/kaniko-project/executor:debug
-    entrypoint: [""]
-  script:
-    - mkdir -p /kaniko/.docker
-    - echo "{\"auths\":{\"$CONTAINER_REGISTRY_URL\":{\"auth\":\"$(echo -n ${DOCKERHUB_USERNAME}:${DOCKERHUB_PASSWORD} | base64)\"}}}" > /kaniko/.docker/config.json
-    - /kaniko/executor --context=$CI_PROJECT_DIR/pre-commit --dockerfile=$CI_PROJECT_DIR/pre-commit/Dockerfile --destination=explorviz/pre-commit:latest
+deploy-pre-commit-amd64:
+  extends:
+    - .build-and-deploy
+  variables:
+    DOCKER_CONTEXT_PATH: $CI_PROJECT_DIR/pre-commit
+  rules:
+    - if: $ARM64_BUILD
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"'
 
-retag-pre-commit-image:
-  stage: deploy:retagging
-  tags:
-    - exec-docker
-  only:
-    - schedules
-  image:
-    name: gcr.io/go-containerregistry/crane:debug
-    entrypoint: [""]
-  script:
-    - crane auth login -u $DOCKERHUB_USERNAME -p $DOCKERHUB_PASSWORD "index.docker.io"
-    - crane cp explorviz/pre-commit:latest explorviz/pre-commit:$CI_COMMIT_SHORT_SHA
+retag-pre-commit-amd64-as-latest:
+  extends: .retag-dockerhub-image
+  rules:
+    - if: $MULTI_ARCH_BUILD || $ARM64_BUILD
+      when: never
+    - if: '$CI_PIPELINE_SOURCE == "schedule" || $CI_PIPELINE_SOURCE == "web"'
+  variables:
+    SOURCE_TAG: 'amd64'
+    TARGET_TAG: 'latest'
